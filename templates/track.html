@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Tracks</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Tracks</h1>
+    {% if tracks|length < 1 %}
+    <h4 style="text-align: center">There are no tracks. Create one below!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Track</th>
+            <th>Album</th>
+            <th>Lyric</th>
+            <th>Path</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for track in tracks %}
+            <tr>
+                <td>{{ track.name }}</td>
+                <td>{{ track.album.name }}</td>
+                <td>{{ track.lyric }}</td>
+                <td>{{ track.path }}</td>
+                <td>{{ track.date_created.date() }}</td>
+                <td>
+                    <a href="/track/delete/{{track.id}}">Delete</a>
+                    <br>
+                    <a href="/track/update/{{track.id}}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="form">
+        {% if albums|length < 1 %}
+        <h4 style="text-align: center"> You can't create a track because there is no albums found</h4>
+        <a href="/album">Create Album Here</a>
+        {% else %}
+
+        <form action="/track" method="POST">
+            <input type="text" name="name" id="name" value="Enter Track Name">
+            <input type="text" name="lyric" id="lyric" value="Enter lyric text">
+            <input type="text" name="path" id="path" value="Enter Track Path">
+            <select name="albums" id="albums">
+                {% for album in albums %}
+                    <option value="{{ album.name }}">{{ album.name }}</option>
+                 {% endfor %}
+                
+            </select>
+            <input type="submit" value="Add Track">
+        </form>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

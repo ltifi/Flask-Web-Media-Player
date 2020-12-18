@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Tracks</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Update Track</h1>
+
+    <div class="form">
+        <form action="/track/update/{{track.id}}" method="POST">
+            <input type="text" name="name" id="name" value="{{track.name}}">
+            <input type="text" name="lyric" id="lyric" value="{{track.lyric}}">
+            <input type="text" name="path" id="path" value="{{track.path}}">
+            <select name="albums" id="albums">
+                {% for album in albums %}
+                    <option value="{{ album.name }}">{{ album.name }}</option>
+                 {% endfor %}
+                
+            </select>
+            <input type="submit" value="Update">
+    </form>
+    </div>
+</div>
+{% endblock %}
